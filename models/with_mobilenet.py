@@ -120,4 +120,5 @@ class PoseEstimationWithMobileNet(nn.Module):
             stages_output.extend(
                 refinement_stage(torch.cat([backbone_features, stages_output[-2], stages_output[-1]], dim=1)))
 
-        return stages_output
+        # concatenated heeat + paf maps (19+38=57)
+        return [torch.cat((stages_output[2], stages_output[1]), 1)]
